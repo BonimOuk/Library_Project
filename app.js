@@ -15,12 +15,12 @@ class Library {
   books = [];
 
   markRead(checkbox, id) {
-    for (book of books) {
-      if ((book.id = id)) {
+    console.log("check", id);
+    for (let book of this.books) {
+      if (book.id == id) {
         book.read = true;
-      } else {
-        book.read = false;
       }
+      console.log("mybook", book);
     }
 
     checkbox.checked = true;
@@ -31,6 +31,7 @@ class Library {
     const author = document.getElementById("author").value;
     const read = document.getElementById("read").checked;
 
+    console.log(this.bookCount);
     let book = new Book(this.bookCount, title, author, read);
     this.books.push(book);
 
@@ -49,8 +50,12 @@ class Library {
     readCheckbox.type = "checkbox";
     readCheckbox.checked = read;
     readCheckbox.disabled = read;
+    readCheckbox.id = "book" + this.bookCount;
 
-    readCheckbox.addEventListener("click", markRead(readCheckbox, id));
+    let myId = this.bookCount;
+    readCheckbox.addEventListener("click", function () {
+      library.markRead(readCheckbox, myId);
+    });
 
     readColumn.appendChild(readCheckbox);
     tableRow.appendChild(titleColumn);
